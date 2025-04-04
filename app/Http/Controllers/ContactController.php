@@ -92,4 +92,26 @@ class ContactController extends Controller
 
         abort(400, 'Format non supporté');
     }
+
+    public function import(Request $request, ContactList $list)
+    {
+        $request->validate([
+            'contacts' => 'required|array',
+            'contacts.*.first_name' => 'required|string|max:255',
+            'contacts.*.last_name' => 'required|string|max:255',
+            'contacts.*.email' => 'required|email|max:255',
+            'contacts.*.phone' => 'required|string|max:255'
+        ]);
+
+        foreach ($request->contacts as $contactData) {
+            $list->contacts()->create([
+                'first_name' => $contactData['first_name'],
+                'last_name' => $contactData['last_name'],
+                'email' => $contactData['email'],
+                'phone' => $contactData['phone']
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Contacts imported successfully');
+    }
 }

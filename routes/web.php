@@ -25,6 +25,7 @@ Route::middleware([
     Route::get('/lists/{list}', [\App\Http\Controllers\ContactListController::class, 'show'])->name('lists.show');
     Route::get('/lists/{list}/contacts', [\App\Http\Controllers\ContactListController::class, 'show'])->name('lists.contacts');
     Route::post('/lists/{list}/contacts', [\App\Http\Controllers\ContactController::class, 'store'])->name('contacts.store');
+    Route::post('/lists/{list}/contacts/import', [\App\Http\Controllers\ContactController::class, 'import'])->name('contacts.import');
 });
 
 require __DIR__.'/settings.php';
